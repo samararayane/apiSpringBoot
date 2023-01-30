@@ -1,6 +1,8 @@
 package br.com.treinamento.api_springBoot.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -18,5 +20,4 @@ public class User {
     @Column(unique = true)
     private String email;
     private String password;
-
 }

@@ -1,6 +1,6 @@
 package br.com.treinamento.api_springBoot.services.exceptions;
 
-public class DataIntegratyViolationException extends RuntimeException {
+public class DataIntegratyViolationException extends RuntimeException{
 
     public DataIntegratyViolationException(String message) {
         super(message);

@@ -1,7 +1,5 @@
 package br.com.treinamento.api_springBoot.resources;
 
-import br.com.treinamento.api_springBoot.config.ModelMapperConfig;
-import br.com.treinamento.api_springBoot.domain.User;
 import br.com.treinamento.api_springBoot.domain.dto.UserDTO;
 import br.com.treinamento.api_springBoot.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -10,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.servlet.Servlet;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,9 +17,6 @@ import java.util.stream.Collectors;
 public class UserResource {
 
     private static final String ID = "/{id}";
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @Autowired
     private ModelMapper mapper;
@@ -38,16 +32,13 @@ public class UserResource {
     @GetMapping
     public ResponseEntity<List<UserDTO>> findAll() {
         return ResponseEntity.ok().body(service.findAll()
-                .stream()
-                .map(x -> mapper.map(x, UserDTO.class))
-                .collect(Collectors.toList()));
+                .stream().map(x -> mapper.map(x, UserDTO.class)).collect(Collectors.toList()));
     }
 
     @PostMapping
     public ResponseEntity<UserDTO> create(@RequestBody UserDTO obj) {
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path(ID)
-                .buildAndExpand(service.create(obj).getId()).toUri();
-
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest().path(ID).buildAndExpand(service.create(obj).getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 

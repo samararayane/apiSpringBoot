@@ -17,16 +17,15 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private ModelMapper mapper;
+    private UserRepository repository;
 
     @Autowired
-    UserRepository repository;
+    private ModelMapper mapper;
 
     @Override
     public User findById(Integer id) {
         Optional<User> obj = repository.findById(id);
-
-        return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado!"));
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
     }
 
     public List<User> findAll() {
@@ -53,9 +52,8 @@ public class UserServiceImpl implements UserService {
 
     private void findByEmail(UserDTO obj) {
         Optional<User> user = repository.findByEmail(obj.getEmail());
-
-        if (user.isPresent() && !user.get().getId().equals(obj.getId())) {
-            throw new DataIntegratyViolationException("E-mail já cadastrado");
+        if(user.isPresent() && !user.get().getId().equals(obj.getId())) {
+            throw new DataIntegratyViolationException("E-mail já cadastrado no sistema");
         }
     }
 }
